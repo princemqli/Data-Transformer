@@ -91,14 +91,12 @@ values (1, 'Raj', 'Kumar', 'IT', '2019-07-10', 60000),
 (20, 'Kavita', 'Shah', 'HR', '2021-04-08', 56000);
 select * from employees;
 
-select o.order_id, c.first_name, c.last_name, o.total_amount from orders o inner join customers c on o.customer_id = c.customer_id;
+select o.order_id, c.first_name, c.last_name, o.total_amount from orders o inner join customers c on o.customer_id=c.customer_id;
 
 select c.first_name, c.last_name, o.order_id from customers c left join orders o on c.customer_id = o.customer_id;
 
 select o.order_id, c.first_name from orders o right join customers c on o.customer_id = c.customer_id;
 
-select first_name, last_name from customers where customer_id in (select customer_id from orders where total_amount > (select avg(total_amount) from orders)
-);
 select first_name, salary from employees where salary > (select avg(salary) from employees);
 
 select order_id,year(order_date) as year,month(order_date) as month from orders;

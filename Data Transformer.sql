@@ -111,26 +111,36 @@ select o.order_id, c.first_name from orders o right join customers c on o.custom
 
 ##SUBQUERY TO FIND CUSTOMERS WHO HAVE PLACED ORDERS WORTH MORE THAN THE AVERAGE AMOUNT
 select * from customers where customer_id in (select customer_id from orders 
-	WHERE total_amount > (SELECT AVG(total_amount) FROM orders)
-);
+where total_amount > (select avg(total_amount) from orders));
+
+##SUBQUERY TO FIND EMPLOYEES WITH SALARIES ABOVE THE AVERAGE SALARY.
 select first_name, salary from employees where salary > (select avg(salary) from employees);
 
+##EXTRACT THE YEAR AND MONTH FROM THE ORDERDATE.
 select order_id,year(order_date) as year,month(order_date) as month from orders;
 
+##FORMAT THE ORDERDATE TO A MORE READABLE FORMAT (E.G., 'DD-MMM-YYYY').
 select order_id,date_format(order_date, '%d-%b-%y') as date_order from orders;
 
+##CONCATENATE FIRSTNAME AND LASTNAME TO FORM A FULL NAME.
 select concat(first_name, ' ', last_name) as full_name from customers;
 
+##REPLACE PART OF A STRING (E.G., REPLACE 'JOHN' WITH 'JONATHAN').
 select replace(first_name, 'john', 'jonathan') from customers;
 
+##CONVERT FIRSTNAME TO UPPERCASE AND LASTNAME TO LOWERCASE.
 select upper(first_name), lower(last_name) from customers;
 
+##TRIM EXTRA SPACES FROM THE EMAIL FIELD.
 select trim(email) from customers;
 
+##CALCULATE THE RUNNING TOTAL OF TOTALAMOUNT FOR EACH ORDER.
 select order_id, total_amount,sum(total_amount) over (order by order_date) as total from orders;
 
+##RANK ORDERS BASED ON TOTALAMOUNT USING THE RANK() FUNCTION.
 select order_id, total_amount, rank() over (order by total_amount desc) as rankno from orders;
 
+##ASSIGN A DISCOUNT BASED ON TOTALAMOUNT IN ORDERS (E.G., > 1000: 10% OFF, > 500: 5% OFF).
 select order_id, total_amount,
 case 
     when total_amount > 1000 then '10% discount'
@@ -139,6 +149,7 @@ case
 end as discount
 from orders;
 
+##CATEGORIZE EMPLOYEES' SALARIES AS HIGH, MEDIUM, OR LOW.
 select first_name, salary,
 case 
     when salary >= 55000 then 'high'

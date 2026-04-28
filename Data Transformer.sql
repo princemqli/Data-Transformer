@@ -1,13 +1,16 @@
 create database data_transformer;
 use data_transformer;
- 
+
+##customer table
 create Table customers (
 	customer_id int primary key,
     first_name varchar(30),
     last_name varchar(30),
     email varchar(100),
 	registration_date date  
-	);    
+	); 
+
+##INSERT 20 SIMPLE DATA INTO THE CUSTOMERS TABLE
 insert into customers (customer_id, first_name, last_name, email, registration_date)
 values (1, 'Prince', 'Mali', 'prince@email.com', '2022-03-15'),
 (2, 'Ashish', 'Mali', 'ashish.mali@email.com', '2021-11-02'),
@@ -29,14 +32,17 @@ values (1, 'Prince', 'Mali', 'prince@email.com', '2022-03-15'),
 (18, 'Riya', 'Das', 'riya.das@email.com', '2023-03-18'),
 (19, 'Manish', 'Agarwal', 'manish.agarwal@email.com', '2022-06-12'),
 (20, 'Kavita', 'Shah', 'kavita.shah@email.com', '2021-10-03');
+##SHOW CUSTOMER TABLE
 select * from customers;
 
+##ORDER TABLE
 create table orders (
     order_id int primary key,
     customer_id int,
     order_date date,
     total_amount decimal(10,2)
 );
+##INSERT 20 SAMPLE DATA INTO THE ORDER TABLE    
 insert into Orders (order_id, customer_id, order_date, total_amount) 
 values (101, 1, '2023-07-01', 150.50),
 (102, 2, '2023-07-02', 220.00),
@@ -58,8 +64,10 @@ values (101, 1, '2023-07-01', 150.50),
 (118, 18, '2023-07-18', 220.00),
 (119, 19, '2023-07-19', 330.00),
 (120, 20, '2023-07-20', 440.00);
+##SHOW ORDERS TABLE
 select * from orders;
 
+##EMPLOYEES TABLE
 create table employees (
     employee_id int primary key,
     first_name varchar(30),
@@ -68,6 +76,7 @@ create table employees (
     hire_date date,
     salary decimal(10,2)
 );
+##INSERT 20 SAMPLE DATA INTO THE EMPLOYEES TABLE
 insert into employees (employee_id, first_name, last_name, department, hire_date, salary) 
 values (1, 'Raj', 'Kumar', 'IT', '2019-07-10', 60000),
 (2, 'Anita', 'Desai', 'Finance', '2020-11-05', 52000),
@@ -91,12 +100,19 @@ values (1, 'Raj', 'Kumar', 'IT', '2019-07-10', 60000),
 (20, 'Kavita', 'Shah', 'HR', '2021-04-08', 56000);
 select * from employees;
 
+##INNER JOIN RETRIEVE ALL ORDERS AND CUSTOMER DETAILLS WHERE ORDERS EXIXT.
 select o.order_id, c.first_name, c.last_name, o.total_amount from orders o inner join customers c on o.customer_id=c.customer_id;
 
+##LEFT JOIN RETRIEVE ALL CUSTOMERS AND THEIR CORRESPONDING ORDERS.
 select c.first_name, c.last_name, o.order_id from customers c left join orders o on c.customer_id = o.customer_id;
 
+##RIGHT JOIN RETRIEVE ALL ORDERS AND THEIR CORRESPONDING CUSTOMERS.
 select o.order_id, c.first_name from orders o right join customers c on o.customer_id = c.customer_id;
 
+##SUBQUERY TO FIND CUSTOMERS WHO HAVE PLACED ORDERS WORTH MORE THAN THE AVERAGE AMOUNT
+select * from customers where customer_id in (select customer_id from orders 
+	WHERE total_amount > (SELECT AVG(total_amount) FROM orders)
+);
 select first_name, salary from employees where salary > (select avg(salary) from employees);
 
 select order_id,year(order_date) as year,month(order_date) as month from orders;

@@ -109,6 +109,11 @@ select c.first_name, c.last_name, o.order_id from customers c left join orders o
 ##RIGHT JOIN RETRIEVE ALL ORDERS AND THEIR CORRESPONDING CUSTOMERS.
 select o.order_id, c.first_name from orders o right join customers c on o.customer_id = c.customer_id;
 
+##Full OUTER JOIN RETRIEVE ALL CUSTOMERS AND ALL ORDERS REGARDLESS OF MATCHING.
+select c.customer_id, c.first_name, c.last_name, o.order_id, o.order_date, o.total_amount from customers c left join orders o on c.customer_id=o.customer_id
+union
+select c.customer_id, c.first_name, c.last_name, o.order_id, order_date, total_amount from customers c right join orders o on c . customer_id=o.customer_id
+
 ##SUBQUERY TO FIND CUSTOMERS WHO HAVE PLACED ORDERS WORTH MORE THAN THE AVERAGE AMOUNT
 select * from customers where customer_id in (select customer_id from orders 
 where total_amount > (select avg(total_amount) from orders));
@@ -125,8 +130,9 @@ select order_id,date_format(order_date, '%d-%b-%y') as date_order from orders;
 ##CONCATENATE FIRSTNAME AND LASTNAME TO FORM A FULL NAME.
 select concat(first_name, ' ', last_name) as full_name from customers;
 
-##REPLACE PART OF A STRING (E.G., REPLACE 'JOHN' WITH 'JONATHAN').
-select replace(first_name, 'john', 'jonathan') from customers;
+##REPLACE PART OF A STRING (E.G., REPLACE 'Prince' WITH 'JONATHAN').
+update customers
+set first_name = replace(first_name, 'Prince', 'jonathan');
 
 ##CONVERT FIRSTNAME TO UPPERCASE AND LASTNAME TO LOWERCASE.
 select upper(first_name), lower(last_name) from customers;

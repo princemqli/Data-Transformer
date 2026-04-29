@@ -6,7 +6,7 @@ create Table customers (
 	customer_id int primary key,
     first_name varchar(20),
     last_name varchar(20),
-    email varchar(100),
+    email varchar(50),
 	registration_date date  
 	); 
 

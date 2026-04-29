@@ -4,8 +4,8 @@ use data_transformer;
 ##customer table
 create Table customers (
 	customer_id int primary key,
-    first_name varchar(30),
-    last_name varchar(30),
+    first_name varchar(20),
+    last_name varchar(20),
     email varchar(100),
 	registration_date date  
 	); 
@@ -70,8 +70,8 @@ select * from orders;
 ##EMPLOYEES TABLE
 create table employees (
     employee_id int primary key,
-    first_name varchar(30),
-    last_name varchar(30),
+    first_name varchar(20),
+    last_name varchar(20),
     department varchar(30),
     hire_date date,
     salary decimal(10,2)

@@ -1,5 +1,5 @@
 ## Project Data Transformer
-## This are query to perfom in the project.
+## This are query to perfrom in the project.
 
  1.⁠ ⁠INNER JOIN: Retrieve all orders and customer details where orders exist.
  
